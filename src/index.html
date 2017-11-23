@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="plugins/main.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Movie World</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <form id="searchForm" class="form-inline my-2 my-lg-0">
+          <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <div class="container">
+      <table id="movieTable" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Rating</th>
+            <th>Title</th>
+            <th>Overview</th>
+          </tr>
+        </thead>
+        <tbody id="movieTableBody">
+        </tbody>
+      </table>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-3">
+            <span class="text-muted">© Movie World 2017</span>
+          </div>
+          <div class="col-2">
+            <img src="assets/img/tmdb.png" style="width: 100px;" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </body>
+</html>
