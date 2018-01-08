@@ -2,6 +2,7 @@
 import '../css/main.css';
 import 'bootstrap';
 import * as _ from 'lodash';
+import fillMoviesTable from './ui';
 
 function apiSearch(keyword) {
   var api_key = "8fd5f0e9c49f8c346a2bd4df0229276a";
@@ -9,15 +10,15 @@ function apiSearch(keyword) {
   request.onreadystatechange = function() {
     if(request.readyState == 4 && request.status == 200)
     {
-      parsedResponse = JSON.parse(request.responseText);
-      movies = parsedResponse.results;
+      var parsedResponse = JSON.parse(request.responseText);
+      var movies = parsedResponse.results;
       console.log(movies);
-      ui.sortMoviesByRating(movies);
+      sortMoviesByRating(movies);
       console.log(movies);
       fillMoviesTable(movies);
     }
   }
-  request.open("GET", "http://localhost/3/search/movie/?api_key=" + api_key + "&include_adult=true&query=" + keyword);
+  request.open("GET", "http://localhost:8080/api/search/" + keyword);
   request.send();
 }
 
@@ -29,7 +30,6 @@ function sortMoviesByRating(movies) {
 }
 
 $('#searchForm').submit(function () {
-  console.log('bla');
   var searchText = $('#searchInput').val();
   apiSearch(searchText);
   return false;

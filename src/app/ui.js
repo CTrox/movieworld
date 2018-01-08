@@ -1,4 +1,4 @@
-export function fillMoviesTable(movies) {
+function fillMoviesTable(movies) {
   var tableBody = $('#movieTableBody');
   var rows = ['poster_path', 'vote_average', 'title', 'overview'];
   var imagePath = "https://image.tmdb.org/t/p/w154/"
@@ -16,3 +16,5 @@ export function fillMoviesTable(movies) {
     tableBody.append(tableRow);
   });
 }
+
+export default fillMoviesTable;

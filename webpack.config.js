@@ -34,5 +34,17 @@ module.exports = {
     ],
     devServer: {
       contentBase: 'public/',
+      proxy: {
+        '/api': {
+          target: {
+            host: "0.0.0.0",
+            protocol: 'http:',
+            port: 8888
+          },
+          pathRewrite: {
+            '^/api': ''
+          }
+        }
+      }
     }
 }
