@@ -3,23 +3,38 @@ import '../css/main.css';
 import 'bootstrap';
 import * as _ from 'lodash';
 import fillMoviesTable from './ui';
+import createModel from './movie_model';
 
-function apiSearch(keyword) {
-  var api_key = "8fd5f0e9c49f8c346a2bd4df0229276a";
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
-    if(request.readyState == 4 && request.status == 200)
-    {
-      var parsedResponse = JSON.parse(request.responseText);
-      var movies = parsedResponse.results;
-      console.log(movies);
-      sortMoviesByRating(movies);
-      console.log(movies);
-      fillMoviesTable(movies);
+const $searchInput = $('#search-input');
+const $search = $('#search-bar');
+const $searchBtn = $('#search-btn');
+
+$searchInput.on('blur', search);
+$search.on('submit', search);
+$searchBtn.on('click', search);
+
+const model = createModel();
+
+function search() {
+  const query = $searchInput.val();
+  const url = 'http://localhost:8080/api/search/' + query
+  $.get(url, function (data) {
+    var data = JSON.parse(data);
+    const movies = data.results;
+    var sortedMovies = sortMoviesByRating(movies);
+    for (const movie of sortedMovies) {
+      model.addMovie(movie);
     }
+  });
+}
+
+function prepareUI () {
+  var formsNodeList = document.querySelectorAll('form');
+  for (var i = 0; i < formsNodeList.length; i++) {
+    formsNodeList[i].addEventListener('submit', function (e) {
+      e.preventDefault();
+    });
   }
-  request.open("GET", "http://localhost:8080/api/search/" + keyword);
-  request.send();
 }
 
 function sortMoviesByRating(movies) {
@@ -29,8 +44,8 @@ function sortMoviesByRating(movies) {
   return movies;
 }
 
-$('#searchForm').submit(function () {
-  var searchText = $('#searchInput').val();
-  apiSearch(searchText);
-  return false;
+$(model).on('modelchange', () => {
+    fillMoviesTable(model.movieList);
 });
+
+prepareUI();

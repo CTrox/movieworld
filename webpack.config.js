@@ -13,12 +13,16 @@ module.exports = {
         path: path.resolve(__dirname, 'public'),
         filename: './app/[name].[chunkhash].js'
     },
+    resolve: {
+      extensions: ['.ts', '.js']
+    },
     devtool: 'source-map',
     module: {
         rules: [
             {test: /\.css$/, use: ExtractTextWebpackPlugin.extract({use: ['css-loader']})},
             {test: /\.(jpg|png|svg|ttf|woff|woff2|eot)$/, use: 'url-loader?limit=25000'},
-            {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+            {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
+            {test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ }
         ]
     },
     plugins: [

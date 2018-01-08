@@ -6,13 +6,10 @@ function fillMoviesTable(movies) {
   tableBody.empty();
   movies.forEach(function(movie) {
     var tableRow = $('<tr>');
-    rows.forEach(function(item) {
-      if (item == 'poster_path') {
-        tableRow.append('<td><img src="' + imagePath + movie[item] + '"></td>');
-      } else {
-        tableRow.append('<td>' + movie[item] + '</td>');
-      }
-    });
+    tableRow.append('<td><img src="' + imagePath + movie.poster_path + '"></td>');
+    tableRow.append('<td>' + movie.rating + '</td>');
+    tableRow.append('<td>' + movie.title + '</td>');
+    tableRow.append('<td>' + movie.overview + '</td>');
     tableBody.append(tableRow);
   });
 }
