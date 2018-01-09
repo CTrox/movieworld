@@ -2,8 +2,8 @@
 import '../css/main.css';
 import 'bootstrap';
 import * as _ from 'lodash';
-import fillMoviesTable from './ui';
 import createModel from './movie_model';
+import * as ui from './ui';
 import * as api from './api';
 
 const $searchInput = $('#search-input');
@@ -56,15 +56,6 @@ function upcoming() {
   });
 }
 
-function prepareUI () {
-  var formsNodeList = document.querySelectorAll('form');
-  for (var i = 0; i < formsNodeList.length; i++) {
-    formsNodeList[i].addEventListener('submit', function (e) {
-      e.preventDefault();
-    });
-  }
-}
-
 function sortMoviesByRating(movies) {
     movies.sort(function(a, b) {
       return parseFloat(b.vote_average) - parseFloat(a.vote_average);
@@ -73,7 +64,5 @@ function sortMoviesByRating(movies) {
 }
 
 $(model).on('modelchange', () => {
-    fillMoviesTable(model.movieList);
+    ui.fillMoviesTable(model.movieList);
 });
-
-prepareUI();

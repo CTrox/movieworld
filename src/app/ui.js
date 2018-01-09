@@ -1,4 +1,4 @@
-function fillMoviesTable(movies) {
+export function fillMoviesTable(movies) {
   var tableBody = $('#movieTableBody');
   var rows = ['poster_path', 'vote_average', 'title', 'overview'];
   var imagePath = "https://image.tmdb.org/t/p/w154/"
@@ -14,4 +14,13 @@ function fillMoviesTable(movies) {
   });
 }
 
-export default fillMoviesTable;
+function prepareUI () {
+  var formsNodeList = document.querySelectorAll('form');
+  for (var i = 0; i < formsNodeList.length; i++) {
+    formsNodeList[i].addEventListener('submit', function (e) {
+      e.preventDefault();
+    });
+  }
+}
+
+prepareUI();
