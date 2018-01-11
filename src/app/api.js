@@ -5,32 +5,37 @@ function apiURL(endpoint, params = '') {
   return api_base_url + endpoint + params;
 }
 
-function responseToMovies(responseData) {
+function parseResponse(responseData) {
   var data = JSON.parse(responseData);
-  console.log(data.results);
-  return data.results;
+  console.log(data);
+  return data;
 }
 
 export function searchMovies(query, fn) {
   $.get(apiURL('/search/', query), function (data) {
-    fn(responseToMovies(data));
+    fn(parseResponse(data).results);
   });
 }
 
+export function getGenres(fn) {
+  $.get(apiURL('/genres'), function (data) {
+    fn(parseResponse(data).genres);
+  });
+}
 export function topMovies(fn) {
   $.get(apiURL('/popular'), function (data) {
-    fn(responseToMovies(data));
+    fn(parseResponse(data).results);
   });
 }
 
 export function popularMovies(fn) {
   $.get(apiURL('/top'), function (data) {
-    fn(responseToMovies(data));
+    fn(parseResponse(data).results);
   });
 }
 
 export function upcomingMovies(fn) {
   $.get(apiURL('/upcoming'), function (data) {
-    fn(responseToMovies(data));
+    fn(parseResponse(data).results);
   });
 }

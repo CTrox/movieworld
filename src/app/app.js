@@ -3,6 +3,7 @@ import '../css/main.css';
 import 'bootstrap';
 import * as _ from 'lodash';
 import createModel from './movie_model';
+import * as genreModel from './genre_model';
 import * as ui from './ui';
 import * as api from './api';
 
@@ -18,7 +19,7 @@ $search.on('submit', search);
 $searchBtn.on('click', search);
 $topBtn.on('click', top);
 $popularBtn.on('click', popular);
-$upcomingBtn.on('click', upcoming);
+$upcomingBtn.on('click', getGenres);
 
 const model = createModel();
 
@@ -30,6 +31,16 @@ function search() {
       model.addMovie(movie);
     }
   });
+}
+
+function getGenres() {
+  api.getGenres(function(genres) {
+    const model = genreModel.create();
+    for (const genre of genres) {
+      model.addGenre(genre);
+    }
+    console.log(model.getGenreByID(28));
+  })
 }
 
 function top() {
