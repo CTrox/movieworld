@@ -7,7 +7,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     entry: {
         app: './src/app/app.js',
-        vendor: ['core-js', 'jquery', 'bootstrap', 'lodash']
+        vendor: ['core-js', 'jquery', 'popper.js', 'bootstrap', 'lodash']
     },
     output: {
         path: path.resolve(__dirname, 'public'),
@@ -26,7 +26,11 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.ProvidePlugin({$: 'jquery', jQuery: 'jquery'}),
+        new webpack.ProvidePlugin({
+          $: 'jquery',
+          jQuery: 'jquery',
+          Popper: 'popper.js'
+        }),
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new ExtractTextWebpackPlugin('app/app.[chunkhash].css'),
         new webpack.optimize.CommonsChunkPlugin({names: ['vendor', 'manifest']}),

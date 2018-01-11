@@ -1,12 +1,14 @@
 //import * from "./ui";
 import '../css/main.css';
 import 'bootstrap';
+import 'bootstrap/js/dropdown';
 import * as _ from 'lodash';
-import createModel from './movie_model';
-import * as genreModel from './genre_model';
+import * as mModel from './movie_model';
+import * as gModel from './genre_model';
 import * as ui from './ui';
 import * as api from './api';
 
+const $genreDropdown = $('#genre-dropdown');
 const $searchInput = $('#search-input');
 const $search = $('#search-bar');
 const $searchBtn = $('#search-btn');
@@ -19,34 +21,38 @@ $search.on('submit', search);
 $searchBtn.on('click', search);
 $topBtn.on('click', top);
 $popularBtn.on('click', popular);
-$upcomingBtn.on('click', getGenres);
+$upcomingBtn.on('click', upcoming);
 
-const model = createModel();
+const movieModel = mModel.create();
+const genreModel = gModel.create();
 
 function search() {
   const query = $searchInput.val();
   api.searchMovies(query, function(movies) {
     var sortedMovies = sortMoviesByRating(movies);
     for (const movie of sortedMovies) {
-      model.addMovie(movie);
+      movieModel.addMovie(movie);
     }
   });
 }
 
+function toggleDropdown() {
+}
+
 function getGenres() {
   api.getGenres(function(genres) {
-    const model = genreModel.create();
     for (const genre of genres) {
-      model.addGenre(genre);
+      genreModel.addGenre(genre);
     }
-    console.log(model.getGenreByID(28));
+    console.log(genreModel.getGenreByID(28));
   })
 }
 
 function top() {
   api.topMovies(function(movies) {
-    for (const movie of movies) {
-      model.addMovie(movie);
+    var sortedMovies = sortMoviesByRating(movies);
+    for (const movie of sortedMovies) {
+      movieModel.addMovie(movie);
     }
   });
 }
@@ -54,7 +60,7 @@ function top() {
 function popular() {
   api.popularMovies(function(movies) {
     for (const movie of movies) {
-      model.addMovie(movie);
+      movieModel.addMovie(movie);
     }
   });
 }
@@ -62,7 +68,7 @@ function popular() {
 function upcoming() {
   api.upcomingMovies(function(movies) {
     for (const movie of movies) {
-      model.addMovie(movie);
+      movieModel.addMovie(movie);
     }
   });
 }
@@ -74,6 +80,13 @@ function sortMoviesByRating(movies) {
   return movies;
 }
 
-$(model).on('modelchange', () => {
-    ui.fillMoviesTable(model.movieList);
+$(movieModel).on('modelchange', () => {
+  ui.fillMoviesTable(movieModel.movieList);
 });
+
+$(genreModel).on('modelchange', () => {
+  console.log('populating dropdown');
+  ui.populateDropdown($genreDropdown, genreModel.genreList);
+});
+
+getGenres();

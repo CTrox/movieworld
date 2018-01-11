@@ -1,11 +1,11 @@
-import createModel from './movie-model';
+import create from './movie-model';
 import 'jest';
 
 const movie = {id:123, title: 'abc', vote_average: 6.8, vote_count: 1200};
 
 let model;
 beforeEach(() => {
-  model = createModel();
+  model = create();
 });
 
 test('model is created', () => {

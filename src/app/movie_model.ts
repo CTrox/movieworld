@@ -23,7 +23,7 @@ class Movie {
   }
 }
 
-function createModel() {
+export function create() {
 
   function addMovie(movie: any) {
     model.movieList.push(new Movie(movie.id, movie.title, movie.overview, movie.poster_path, movie.vote_average, movie.vote_count));
@@ -51,5 +51,3 @@ function createModel() {
 
   return model;
 }
-
-export default createModel;

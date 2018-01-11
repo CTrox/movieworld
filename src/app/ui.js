@@ -14,6 +14,14 @@ export function fillMoviesTable(movies) {
   });
 }
 
+export function populateDropdown(dropdown, genres) {
+  const dropdownMenu = dropdown.next('.dropdown-menu');
+  dropdownMenu.empty();
+  for (const genre of genres) {
+    dropdownMenu.append('<a class="dropdown-item" href="#">' + genre.name + '</a>');
+  }
+}
+
 function prepareUI () {
   var formsNodeList = document.querySelectorAll('form');
   for (var i = 0; i < formsNodeList.length; i++) {
