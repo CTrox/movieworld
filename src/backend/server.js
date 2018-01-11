@@ -6,7 +6,7 @@ var api_base_url = 'https://api.themoviedb.org/3'
 
 // constructs and returns the full api url
 function apiURL(endpoint, params = '') {
-  return api_base_url + endpoint + '?api_key=' + api_key + params
+  return api_base_url + endpoint + '?api_key=' + api_key + params;
 }
 
 // sends a request to url and sends response to res
