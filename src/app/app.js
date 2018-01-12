@@ -1,6 +1,5 @@
 import '../css/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Popper from 'popper.js/dist/umd/popper.js';
 import 'bootstrap';
 import 'bootstrap/js/dist/util';
 import 'bootstrap/js/dist/dropdown';
@@ -32,13 +31,8 @@ function search() {
   const query = $searchInput.val();
   api.searchMovies(query, function(movies) {
     var sortedMovies = sortMoviesByRating(movies);
-    for (const movie of sortedMovies) {
-      movieModel.addMovie(movie);
-    }
+    movieModel.addMovies(sortedMovies);
   });
-}
-
-function toggleDropdown() {
 }
 
 function favorite(movie) {
@@ -76,26 +70,20 @@ function updateFavorites() {
 function top() {
   api.topMovies(function(movies) {
     var sortedMovies = sortMoviesByRating(movies);
-    for (const movie of sortedMovies) {
-      movieModel.addMovie(movie);
-    }
+    movieModel.addMovies(sortedMovies);
     updateFavorites();
   });
 }
 
 function popular() {
   api.popularMovies(function(movies) {
-    for (const movie of movies) {
-      movieModel.addMovie(movie);
-    }
+    movieModel.addMovies(movies);
   });
 }
 
 function upcoming() {
   api.upcomingMovies(function(movies) {
-    for (const movie of movies) {
-      movieModel.addMovie(movie);
-    }
+    movieModel.addMovies(movies);
   });
 }
 

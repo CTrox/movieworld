@@ -1,6 +1,6 @@
 export interface MovieModel {
   movieList: Movie[];
-  addMovie: (movie: any) => void;
+  addMovies: (movies: any, clear: boolean) => void;
   getMovie: (id: number) => Movie;
   toggleFavorite: (id: number) => void;
   resetMovieList: () => void;
@@ -28,8 +28,21 @@ class Movie {
 
 export function create() {
 
-  function addMovie(movie: any) {
-    model.movieList.push(new Movie(movie.id, movie.title, movie.overview, movie.poster_path, movie.vote_average, movie.vote_count, movie.favorite));
+  function addMovies(movies: any, clear=true) {
+    if (clear) {
+      resetMovieList();
+    }
+    for (const movie of movies) {
+      model.movieList.push(new Movie(
+        movie.id,
+        movie.title,
+        movie.overview,
+        movie.poster_path,
+        movie.vote_average,
+        movie.vote_count,
+        movie.favorite)
+      );
+    }
     notifyModelChange();
   }
 
@@ -57,7 +70,7 @@ export function create() {
     $model.trigger('modelchange');
   }
 
-  const model: MovieModel = {movieList: undefined, addMovie, getMovie, resetMovieList, toggleFavorite};
+  const model: MovieModel = {movieList: undefined, addMovies, getMovie, resetMovieList, toggleFavorite};
   model.movieList = [];
   const $model = $(model);
 
