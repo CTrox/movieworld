@@ -50,7 +50,8 @@ app.get('/top', (req, res) => {
 });
 
 app.get('/top_genre/:genre_id', (req, res) => {
-  var params = '&page=1&sort_by=vote_average.desc&with_genres=' + req.params.genre_id;
+  // sorts by average votes and filters out crap with vote_count > 100
+  var params = '&page=1&sort_by=vote_average.desc&vote_count.gte=100&with_genres=' + req.params.genre_id;
   var url = apiURL('/discover/movie', params);
   requestAndRespond(url, res);
 });

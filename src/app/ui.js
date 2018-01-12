@@ -27,7 +27,7 @@ export function populateDropdown(dropdown, genres) {
   const dropdownMenu = dropdown.next('.dropdown-menu');
   dropdownMenu.empty();
   for (const genre of genres) {
-    dropdownMenu.append('<a class="dropdown-item" href="#">' + genre.name + '</a>');
+    dropdownMenu.append('<a id="genre-' + genre.id + '" class="dropdown-item">' + genre.name + '</a>');
   }
 }
 

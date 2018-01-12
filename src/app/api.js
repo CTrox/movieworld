@@ -22,8 +22,15 @@ export function getGenres(fn) {
     fn(parseResponse(data).genres);
   });
 }
+
 export function topMovies(fn) {
   $.get(apiURL('/top'), function (data) {
+    fn(parseResponse(data).results);
+  });
+}
+
+export function topMoviesByGenre(genre, fn) {
+  $.get(apiURL('/top_genre/' + genre.id), function (data) {
     fn(parseResponse(data).results);
   });
 }

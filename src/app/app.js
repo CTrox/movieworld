@@ -26,6 +26,7 @@ $upcomingBtn.on('click', upcoming);
 
 const movieModel = mModel.create();
 const genreModel = gModel.create();
+var currentGenre;
 
 function search() {
   const query = $searchInput.val();
@@ -40,6 +41,12 @@ function favorite(movie) {
   api.favMovie(movie, function() {
     console.log("Favorited movie", movie.title);
   });
+}
+
+function switchGenre(genre) {
+  console.log(genre);
+  $('#genre-dropdown').text(genre.name);
+  currentGenre = genre;
 }
 
 function getGenres() {
@@ -68,10 +75,17 @@ function updateFavorites() {
 }
 
 function top() {
-  api.topMovies(function(movies) {
-    var sortedMovies = sortMoviesByRating(movies);
-    movieModel.addMovies(sortedMovies);
-  });
+  if (typeof currentGenre !== 'undefined' && currentGenre) {
+    api.topMoviesByGenre(currentGenre, function(movies) {
+      var sortedMovies = sortMoviesByRating(movies);
+      movieModel.addMovies(sortedMovies);
+    });
+  } else {
+    api.topMovies(function(movies) {
+      var sortedMovies = sortMoviesByRating(movies);
+      movieModel.addMovies(sortedMovies);
+    });
+  }
 }
 
 function popular() {
@@ -108,6 +122,11 @@ $(movieModel).on('modelchange', () => {
 $(genreModel).on('modelchange', () => {
   console.log('populating dropdown');
   ui.populateDropdown($genreDropdown, genreModel.genreList);
+  for (const genre of genreModel.genreList) {
+    $('#genre-' + genre.id).on('click', function() {
+      switchGenre(genre);
+    });
+  }
 });
 
 getGenres();
