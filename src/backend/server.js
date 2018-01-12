@@ -3,6 +3,10 @@ var app = express();
 var request = require('request');
 var api_key = "8fd5f0e9c49f8c346a2bd4df0229276a";
 var api_base_url = 'https://api.themoviedb.org/3'
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // constructs and returns the full api url
 function apiURL(endpoint, params = '') {
@@ -55,8 +59,14 @@ app.get('/upcoming', (req, res) => {
   requestAndRespond(url, res);
 });
 
+app.post('/favorite', (req, res) => {
+  console.log("fav", req.body);
+  res.send("Got it");
+});
+
 app.use(function (req, res, next) {
   res.status(404).send("Not found");
 });
+
 
 app.listen(8888);

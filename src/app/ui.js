@@ -1,3 +1,5 @@
+import favorite from './app';
+
 export function fillMoviesTable(movies) {
   var tableBody = $('#movieTableBody');
   var rows = ['poster_path', 'vote_average', 'title', 'overview'];
@@ -10,6 +12,13 @@ export function fillMoviesTable(movies) {
     tableRow.append('<td>' + movie.rating + '</td>');
     tableRow.append('<td>' + movie.title + '</td>');
     tableRow.append('<td>' + movie.overview + '</td>');
+    if (movie.favorite) {
+      // ugly
+      var favoriteBtn = '<button id="fav-btn-' + movie.id + '"  class="btn btn-success">★</button>';
+    } else {
+      var favoriteBtn = '<button id="fav-btn-' + movie.id + '" class="btn btn-secondary">★</button>';
+    }
+    tableRow.append('<td>' + favoriteBtn + '</td>');
     tableBody.append(tableRow);
   });
 }

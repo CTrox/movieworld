@@ -39,3 +39,9 @@ export function upcomingMovies(fn) {
     fn(parseResponse(data).results);
   });
 }
+
+export function favMovie(movie, fn) {
+  $.post(apiURL('/favorite'), movie, function (data) {
+    fn(data);
+  });
+}

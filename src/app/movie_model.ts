@@ -1,39 +1,51 @@
 export interface MovieModel {
   movieList: Movie[];
   addMovie: (movie: any) => void;
-  getMovie: (id: string) => Movie;
+  getMovie: (id: number) => Movie;
+  toggleFavorite: (id: number) => void;
   resetMovieList: () => void;
 }
 
 class Movie {
-  public id: string;
+  public id: number;
   public title: string;
   public overview: string;
   public poster_path: string;
   public rating: number;
   public votes: number;
+  public favorite: boolean;
 
-  constructor(id, title, overview, poster_path, rating, votes) {
+  constructor(id, title, overview, poster_path, rating, votes, favorite) {
     this.id = id;
     this.title = title;
     this.overview = overview;
     this.poster_path = poster_path;
     this.rating = rating;
     this.votes = votes;
+    this.favorite = favorite;
   }
 }
 
 export function create() {
 
   function addMovie(movie: any) {
-    model.movieList.push(new Movie(movie.id, movie.title, movie.overview, movie.poster_path, movie.vote_average, movie.vote_count));
+    model.movieList.push(new Movie(movie.id, movie.title, movie.overview, movie.poster_path, movie.vote_average, movie.vote_count, movie.favorite));
     notifyModelChange();
   }
 
-  function getMovie(id: string) {
+  function getMovie(id: number) {
     return model.movieList.find((movie) => {
       return movie.id === id;
     });
+  }
+
+  function toggleFavorite(id: number) {
+    for (const movie of model.movieList) {
+      if (movie.id === id) {
+        movie.favorite = !movie.favorite;
+        notifyModelChange();
+      }
+    }
   }
 
   function resetMovieList() {
@@ -45,7 +57,7 @@ export function create() {
     $model.trigger('modelchange');
   }
 
-  const model: MovieModel = {movieList: undefined, addMovie, getMovie, resetMovieList};
+  const model: MovieModel = {movieList: undefined, addMovie, getMovie, resetMovieList, toggleFavorite};
   model.movieList = [];
   const $model = $(model);
 

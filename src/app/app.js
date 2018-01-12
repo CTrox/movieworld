@@ -1,4 +1,3 @@
-//import * from "./ui";
 import '../css/main.css';
 import 'bootstrap';
 import 'bootstrap/js/dropdown';
@@ -37,6 +36,12 @@ function search() {
 }
 
 function toggleDropdown() {
+}
+
+function favorite(movie) {
+  api.favMovie(movie, function() {
+    movieModel.toggleFavorite(movie.id)
+  });
 }
 
 function getGenres() {
@@ -81,7 +86,14 @@ function sortMoviesByRating(movies) {
 }
 
 $(movieModel).on('modelchange', () => {
+  console.log("Movie model change");
   ui.fillMoviesTable(movieModel.movieList);
+  // set fav button onclicks
+  for (const movie of movieModel.movieList) {
+    $('#fav-btn-' + movie.id).on('click', function() {
+      favorite(movie);
+    });
+  }
 });
 
 $(genreModel).on('modelchange', () => {
