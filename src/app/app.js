@@ -71,7 +71,6 @@ function top() {
   api.topMovies(function(movies) {
     var sortedMovies = sortMoviesByRating(movies);
     movieModel.addMovies(sortedMovies);
-    updateFavorites();
   });
 }
 
@@ -103,6 +102,7 @@ $(movieModel).on('modelchange', () => {
       favorite(movie);
     });
   }
+  updateFavorites();
 });
 
 $(genreModel).on('modelchange', () => {
