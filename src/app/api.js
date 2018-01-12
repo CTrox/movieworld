@@ -23,13 +23,13 @@ export function getGenres(fn) {
   });
 }
 export function topMovies(fn) {
-  $.get(apiURL('/popular'), function (data) {
+  $.get(apiURL('/top'), function (data) {
     fn(parseResponse(data).results);
   });
 }
 
 export function popularMovies(fn) {
-  $.get(apiURL('/top'), function (data) {
+  $.get(apiURL('/popular'), function (data) {
     fn(parseResponse(data).results);
   });
 }
