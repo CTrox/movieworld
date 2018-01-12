@@ -43,6 +43,8 @@ module.exports = {
     devServer: {
       contentBase: 'public/',
       proxy: {
+        // proxy for the api backend
+        // required for browser that need CORS
         '/api': {
           target: {
             host: "0.0.0.0",
