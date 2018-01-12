@@ -1,6 +1,9 @@
 import '../css/main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Popper from 'popper.js/dist/umd/popper.js';
 import 'bootstrap';
-import 'bootstrap/js/dropdown';
+import 'bootstrap/js/dist/util';
+import 'bootstrap/js/dist/dropdown';
 import * as _ from 'lodash';
 import * as mModel from './movie_model';
 import * as gModel from './genre_model';
