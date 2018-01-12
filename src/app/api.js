@@ -45,3 +45,9 @@ export function favMovie(movie, fn) {
     fn(data);
   });
 }
+
+export function getFavorites(fn) {
+  $.get(apiURL('/favorite'), function (data) {
+    fn(data);
+  });
+}

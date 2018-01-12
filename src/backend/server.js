@@ -4,6 +4,7 @@ var request = require('request');
 var api_key = "8fd5f0e9c49f8c346a2bd4df0229276a";
 var api_base_url = 'https://api.themoviedb.org/3'
 var bodyParser = require('body-parser');
+var mongodb = require('./mongodb');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -61,7 +62,20 @@ app.get('/upcoming', (req, res) => {
 
 app.post('/favorite', (req, res) => {
   console.log("fav", req.body);
+  if (req.body.favorite == "true") {
+    console.log("inserting movie", req.body.id)
+    mongodb.insert('favorites', {"id": req.body.id, "favorite": req.body.favorite});
+  } else {
+    console.log("removing movie", req.body.id)
+    mongodb.remove('favorites', {"id": req.body.id, "favorite": req.body.favorite});
+  }
   res.send("Got it");
+});
+
+app.get('/favorite', (req, res) => {
+  mongodb.find('favorites', function(docs) {
+    res.send(docs);
+  });
 });
 
 app.use(function (req, res, next) {

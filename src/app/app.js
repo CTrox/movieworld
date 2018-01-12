@@ -39,8 +39,9 @@ function toggleDropdown() {
 }
 
 function favorite(movie) {
+  movieModel.toggleFavorite(movie.id)
   api.favMovie(movie, function() {
-    movieModel.toggleFavorite(movie.id)
+    console.log("Favorited movie", movie.title);
   });
 }
 
@@ -50,7 +51,23 @@ function getGenres() {
       genreModel.addGenre(genre);
     }
     console.log(genreModel.getGenreByID(28));
-  })
+  });
+}
+
+// gets favorites and updates the ui
+function updateFavorites() {
+  api.getFavorites(function(data) {
+    for (const movie of movieModel.movieList) {
+      data.forEach (function(fav){
+        if (movie.id == fav.id) {
+          var isFav = (fav.favorite == "true");
+          if (isFav !== movie.favorite) {
+            movieModel.toggleFavorite(movie.id);
+          }
+        }
+      });
+    }
+  });
 }
 
 function top() {
@@ -59,6 +76,7 @@ function top() {
     for (const movie of sortedMovies) {
       movieModel.addMovie(movie);
     }
+    updateFavorites();
   });
 }
 
