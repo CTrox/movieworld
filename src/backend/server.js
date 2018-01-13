@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var request = require('request');
-var api_key = "8fd5f0e9c49f8c346a2bd4df0229276a";
+// TODO: insert your API Key here
+var api_key = "";
 var api_base_url = 'https://api.themoviedb.org/3'
 var bodyParser = require('body-parser');
 var mongodb = require('./mongodb');
